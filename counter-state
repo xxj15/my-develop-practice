@@ -1,0 +1,31 @@
+import { createContext, useState, useContext } from 'react';
+
+interface CounterContextType {
+  value: number;
+  increase: () => void;
+}
+
+const CounterContext = createContext<CounterContextType | null>(null);
+
+export default function App() {
+  const [count, setCount] = useState(0);
+  const increase = () => setCount((c) => c + 1);
+
+  return (
+    <CounterContext.Provider value={{ value: count, increase }}>
+      <CounterDisplay />
+    </CounterContext.Provider>
+  );
+}
+
+function CounterDisplay() {
+  const ctx = useContext(CounterContext);
+  if (!ctx) return null;
+
+  return (
+    <div>
+      <span>{ctx.value}</span>
+      <button onClick={ctx.increase}>+</button>
+    </div>
+  );
+}
