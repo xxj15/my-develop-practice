@@ -1,0 +1,19 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+export default function Products() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios.get('/api/products').then((res) => setProducts(res.data));
+    // 에러 핸들링 없음
+  }, []);
+
+  return (
+    <div>
+      {products.map((p) => (
+        <div key={p.id}>{p.name}</div>
+      ))}
+    </div>
+  );
+}
