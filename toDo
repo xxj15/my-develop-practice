@@ -1,0 +1,30 @@
+import { useState } from 'react';
+
+export default function TodoApp() {
+  const [todos, setTodos] = useState<string[]>([]);
+  const [input, setInput] = useState('');
+
+  const addTodo = () => {
+    setTodos([...todos, input]);
+    setInput('');
+  };
+
+  console.log('렌더링됨');
+
+  return (
+    <div>
+      <input value={input} onChange={(e) => setInput(e.target.value)} />
+      <button onClick={addTodo}>추가</button>
+      <ul>
+        {todos.map((todo, idx) => (
+          <TodoItem key={idx} text={todo} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function TodoItem({ text }: { text: string }) {
+  console.log('TodoItem 렌더링');
+  return <li>{text}</li>;
+}
